@@ -7,7 +7,8 @@ The project is to design an embedded system function like a stop watch and expan
 
 ## 2. Method
 ### a. Circuit Design
-
+Inline-style: 
+![alt text](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/circuit.png "Circuit Diagram"
 
 
 4pcs power mosfet act as switch triggering the 4 cathodes of LED display connect to ground, 8pcs. 390Ω resistors connected from μC pins to anodes,7 segments and decimal point of LED display, 4pcs. 1kΩ resistors conneted to drain of mosfets, 2pcs push button switches connected from μC pins to ground 
