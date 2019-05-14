@@ -29,18 +29,18 @@ const uint8_t LEDPIN1 = 9;                // output pin for single LED 1
 const uint8_t LEDPIN2 = 10;               // output pin for single LED 2
 
 uint8_t pushPin;                          // variable identify the pin of push button that being pressed
-bool startbuttonState = false;            // variable if state of start = false or stop = true
-bool optionState = true;                  // variable if state of reaction tester = false or stop watch = true
+bool stopstate = true;                    // variable if state for start or stop counter
+byte buttonType = 1;                      // variable which push button was pressed, START/STOP is 1 or RESETis 0
 int deciSeconds = 0;                      // variable to count in desiseconds
 int randNumber;                           // variable for variable number
 
 // forward declaration of function
-void resetbutton();                       // ISR function for reset push button
-void startstopbutton();                   // ISR function for start or stop push button
+void resetISR();                          // ISR function for reset push button
+void startISR();                          // ISR function for start or stop push button
 void pushbutton();                        // debouce function for both push button 
-void optionAStopWatch();                  // stop watch function for option 1
+void stopwatch();                         // function for stop watch function for option 1
 void pressedbutton();                     // function to know what button was pressed, START/STOP or RESET push button
-void timerNow();                          // function to calculate the time in count of decisecond
+void countNow();                          // function to count of decisecond
 
 // setting sevseg object, pin modes and interrupt function
 void setup() {
@@ -60,8 +60,8 @@ void setup() {
 
   pinMode(RESETPIN, INPUT_PULLUP);        // declare the RESETPIN as an INPUT PULLUP
   pinMode(STARTOPPIN, INPUT_PULLUP);      // declare the STARTOPPIN as an INPUT PULLUP
-  attachInterrupt(digitalPinToInterrupt(RESETPIN), resetbutton, FALLING); // reset button external interrupts
-  attachInterrupt(digitalPinToInterrupt(STARTOPPIN), startstopbutton, FALLING); // start stop button external interrupts
+  attachInterrupt(digitalPinToInterrupt(RESETPIN), resetISR, FALLING); // reset button external interrupts
+  attachInterrupt(digitalPinToInterrupt(STARTOPPIN), startISR, FALLING); // start stop button external interrupts
   pinMode(LEDPIN1, OUTPUT);               // declare the LEDPIN1 as an OUTPUT
   pinMode(LEDPIN2, OUTPUT);               // declare the LEDPIN2 as an OUTPUT
 }
@@ -72,13 +72,13 @@ void loop() {
   static bool ledstate = false;           // ledstate for light on or off
 
   pressedbutton();                        // function to know which button was pressed
-  if (optionState == true){               // optionstate is true, START/STOP push button was pressed
-    optionAStopWatch();                   // execute stop watch function
+  if (buttonType == 1){                   // START/STOP push button was pressed
+    stopwatch();                          // execute stop watch function
     previousTime_ms = millis();           // reset previousTime_ms
     digitalWrite(LEDPIN1, false);         // led light 1 off
     digitalWrite(LEDPIN2, false);         // led light 2 off
   }
-  else {                                  // optionstae is false, START/STOP or RESET push button
+  else {                                  // RESET push button was pressed
     deciSeconds = 0;                      // display set to zero
     sevseg.setNumber(deciSeconds, 1);     // set decimal
     sevseg.refreshDisplay();              // repeatedly refresh display
@@ -96,87 +96,84 @@ void pressedbutton(){
   static uint32_t previousTime_ms = 0;    // 0 for initial value for previousTime_ms 
   static bool lastbuttonstate = LOW;      // low for initial value for lastbuttonstate
 
-  if (digitalRead(pushPin) != lastbuttonstate){ // if 
+  if (digitalRead(pushPin) != lastbuttonstate){ // if push button press
     previousTime_ms = millis();           // reset previousTime_ms if button press
   }
 
   // if pressed for 2sec and identify START/STOP or RESET push button
   if ((millis() - previousTime_ms >=2000) && (digitalRead(pushPin)==LOW)) {
-    if (pushPin == STARTOPPIN) {
-      optionState = true;
+    if (pushPin == STARTOPPIN) {          // if START/Stop push button was press
+      buttonType = 1;                     // variable buttonType is 1
     }
-    if (pushPin == RESETPIN) {
-      optionState = false;
+    if (pushPin == RESETPIN) {            // if Reset push button was press
+      buttonType = 0;                     // variable buttonType is 1
     }
   }
-  lastbuttonstate = digitalRead(pushPin);
+  lastbuttonstate = digitalRead(pushPin); // read lastbutton state
 
 }
-// function for attachinterrupt at instant push button, and allow debounce delay
-void resetbutton(){
-  pushPin = RESETPIN;
-  pushbutton();
+
+// ISR function for attachinterrupt Reset push button
+void resetISR(){
+  pushPin = RESETPIN;                    // set variable pushPin to RESETPIN constant
+  pushbutton();                          // call function for debounce and execute reset time to 0
 }
 
-// function for attachinterrupt at instant push button and allow debounce delay
-void startstopbutton(){
-  pushPin = STARTOPPIN;
-  pushbutton();
+// ISR function for attachinterrupt start/stop push button
+void startISR(){
+  pushPin = STARTOPPIN;                 // set variable pushPin to RESETPIN constant
+  pushbutton();                         // call function for debounce and execute stop watch
 }
 
-void timerNow(){
-  static unsigned long timer = millis();
-  static int differenceTime = 0;
-   differenceTime = millis() - timer;
-    if (differenceTime >= 100) {
-      timer = timer + differenceTime; //+= 100;
-      deciSeconds ++; // 100 milliSeconds is equal to 1 deciSecond
-      if (deciSeconds == 10000) { // Reset to 0 after counting for 1000 seconds.
+// function count in deciseconds and calculate time difference for every count
+void countNow(){
+  static unsigned long timer = millis();// set initial timer time to current time
+  static int difference = 0;            // set 0 initially time differnce after count
+   difference = millis() - timer;       // calculation difference, it maybe greater than 100
+    if (difference >= 100) {            // count if time decisecond 
+      timer = timer + difference;       // accumulate time with the exact difference not 100
+      deciSeconds ++;                   // 100 milliSeconds is equal to 1 deciSecond
+      if (deciSeconds == 10000) {       // Reset to 0 after counting for 1000 seconds.
         deciSeconds=0;
       }
     }
 }
 
-void optionAStopWatch(){
-    
-  if (startbuttonState == true){
-    timerNow();
+// function for start stop push button
+void stopwatch(){
+  if (stopstate == false){              // start count
+    countNow();                         // counter function in decisecond
   }
-  /* else{
-    timer = millis(); //+ differenceTime;
-  } */
-  sevseg.setNumber(deciSeconds, 1);
-  sevseg.refreshDisplay(); // Must run repeatedly
-
+  sevseg.setNumber(deciSeconds, 1);     // counter decimal
+  sevseg.refreshDisplay();              // run refresh display repeatedly
 }
+
+// debouce function for both push button 
 void pushbutton(){
   const uint32_t DEBOUNCEDELAY = 500;       // constant debouce delay of 100ms 
   static uint32_t previousTime_ms = 0;      // first call variable 
   static bool lastbuttonstate = LOW;        // previous state from push button
-  //static bool currentbuttonState = LOW;
-
+  
   // If state is due to noise or press
   if (digitalRead(pushPin) != lastbuttonstate){ 
     previousTime_ms = millis();             // reset the previous time
   }
   // if elapse time is equal or greater than DEBOUNCEDELAY
   if((millis() - previousTime_ms) >= DEBOUNCEDELAY){ 
-    // serial monitor output
-    switch (pushPin) {
-      case STARTOPPIN: // Common cathode
-        startbuttonState = !startbuttonState;
-        previousTime_ms = millis();   
-        break;
-      case RESETPIN: // Common anode
-        if (startbuttonState == false) {
-          deciSeconds = 0;
-          sevseg.setNumber(deciSeconds, 1);
-          sevseg.refreshDisplay(); // Must run repeatedly
+    switch (pushPin) {                      // select case by push button pin number
+      case STARTOPPIN:                      // start stop push button was pressed
+        stopstate = !stopstate;             // toggle from start to stop and vice versa
+        previousTime_ms = millis();         // reset the previous time
+        break;                              // exit case
+      case RESETPIN:                        // reset push button was pressed
+        if (stopstate == 1) {               // if counter is stop
+          deciSeconds = 0;                  // reset counter to 0
+          sevseg.setNumber(deciSeconds, 1); // decimal
+          sevseg.refreshDisplay();          // run display refresh repeatedly
         }
-        break;
+        break;                              // exit case
     }
-    previousTime_ms = millis(); 
-  } 
- 
-  lastbuttonstate = digitalRead(pushPin); // save the reading latest button state
+    previousTime_ms = millis();             // reset the previous time
+  }  
+  lastbuttonstate = digitalRead(pushPin);   // save the reading latest button state
 }
