@@ -1,7 +1,7 @@
 #include "SevSeg.h"
 /* 
   ***************************************************************************************************
-  ** Project 2: Bubble Display                                                         **
+  ** Project 2: Bubble Display                                                                     **
   ***************************************************************************************************
   This is an embedded system project with 4 digit display, as counter that counts up which show deciseconds.
   This project function as a stop watch and reaction tester.
@@ -39,9 +39,10 @@ void resetbutton();                       // ISR function for reset push button
 void startstopbutton();                   // ISR function for start or stop push button
 void pushbutton();                        // debouce function for both push button 
 void optionAStopWatch();                  // stop watch function for option 1
-void changeoption();                      // function to select option 1 or option 2
+void pressedbutton();                     // function to know what button was pressed, START/STOP or RESET push button
 void timerNow();                          // function to calculate the time in count of decisecond
 
+// setting sevseg object, pin modes and interrupt function
 void setup() {
   byte numDigits = 4;                     // number of digits of LED display 
   byte digitPins[] = {1, 3, 4, 5};        // μC pins link to cathodes of LED display
@@ -65,38 +66,41 @@ void setup() {
   pinMode(LEDPIN2, OUTPUT);               // declare the LEDPIN2 as an OUTPUT
 }
 
+// loop checks option which button press and execute its function
 void loop() {
-  static uint32_t previousTime_ms = 0;  
-  static bool ledstate = false;
+  static uint32_t previousTime_ms = 0;    // first call 0 for initial value for previousTime_ms
+  static bool ledstate = false;           // ledstate for light on or off
 
-  changeoption();
-  if (optionState == true){
-    optionAStopWatch();
-    previousTime_ms = millis();
-    digitalWrite(LEDPIN1, false);
-    digitalWrite(LEDPIN2, false);
+  pressedbutton();                        // function to know which button was pressed
+  if (optionState == true){               // optionstate is true, START/STOP push button was pressed
+    optionAStopWatch();                   // execute stop watch function
+    previousTime_ms = millis();           // reset previousTime_ms
+    digitalWrite(LEDPIN1, false);         // led light 1 off
+    digitalWrite(LEDPIN2, false);         // led light 2 off
   }
-  else {
-    deciSeconds = 0;
-    sevseg.setNumber(deciSeconds, 1);
-    sevseg.refreshDisplay(); // Must run repeatedly
-    if((millis() - previousTime_ms) >= 1000){
-      previousTime_ms = millis();
-      ledstate = !ledstate;        
+  else {                                  // optionstae is false, START/STOP or RESET push button
+    deciSeconds = 0;                      // display set to zero
+    sevseg.setNumber(deciSeconds, 1);     // set decimal
+    sevseg.refreshDisplay();              // repeatedly refresh display
+    if((millis() - previousTime_ms) >= 1000){ // blinking of two led every second
+      previousTime_ms = millis();         // reset previousTime_ms
+      ledstate = !ledstate;               // alternate ledstate for blink
     }
-    digitalWrite(LEDPIN1, ledstate);
-    digitalWrite(LEDPIN2, ledstate);
+    digitalWrite(LEDPIN1, ledstate);      // output to led 1
+    digitalWrite(LEDPIN2, ledstate);      // output to led 2
   }
 }
 
-void changeoption(){
-  static uint32_t previousTime_ms = 0;      // first call variable 
-  static bool lastbuttonstate = LOW;  
+// function to know which button was pressed and hold for 2sec, START/STOP or RESET push button
+void pressedbutton(){
+  static uint32_t previousTime_ms = 0;    // 0 for initial value for previousTime_ms 
+  static bool lastbuttonstate = LOW;      // low for initial value for lastbuttonstate
 
-  if (digitalRead(pushPin) != lastbuttonstate){
-    previousTime_ms = millis();
+  if (digitalRead(pushPin) != lastbuttonstate){ // if 
+    previousTime_ms = millis();           // reset previousTime_ms if button press
   }
 
+  // if pressed for 2sec and identify START/STOP or RESET push button
   if ((millis() - previousTime_ms >=2000) && (digitalRead(pushPin)==LOW)) {
     if (pushPin == STARTOPPIN) {
       optionState = true;
