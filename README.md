@@ -1,3 +1,3 @@
-## Project 2 Bubble Display
+# Project 2 Bubble Display
  
- # 1. Introduction
+ ## 1. Introduction
