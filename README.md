@@ -7,7 +7,7 @@ The project is to design an embedded system function like a stop watch and expan
 
 ## 2. Method
 ### a. Circuit Design
-Inline-style: 
+Diagram: 
 ![alt text](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/circuit.png "Circuit Diagram")
 
 
