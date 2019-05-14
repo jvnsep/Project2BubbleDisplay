@@ -1,11 +1,12 @@
 # Project 2 Bubble Display
  
 ## 1. Introduction
-The project is to design an embedded system function like a stop watch and expandable for additional feature. The project involves programming and circuit design. The circuit comprises of Teensy 3.1/3.2 Microcontroller, a 4-Digits 7-Segments LED display, few power mosfet, many resistor, couple of LED and push button switch. The program involves display of counter every 100ms, debounce of push button switch, and use of external interuppt.
+The project is to design an embedded system function like a stop watch and expandable for additional feature. The project involves programming and circuit design. The circuit comprises of Teensy 3.1/3.2 Microcontroller, a 4-Digits 7-Segments LED display, few power mosfets, several resistors, couple of LEDs and push button switches. The program involves display of counter every 100ms, debounce of push button switches, and use of external interuppt.
 
 
 
-
+## 2. Method
+### a. Circuit Design
 
 
 
