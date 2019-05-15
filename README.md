@@ -37,7 +37,21 @@ Materials:
 
 ### a. Pins Assigment
 
-| Display Pin No. | Function    | Mosfet | Teensy Pin No. |
+| Display Pin No. | Function    | Others | Teensy Pin No. |
 | :-------------: |:------------|:------:|:--------------:|
-| 1      | Cathode 1 | 1 |2 |
+|1	|Cathode 1	|Mosfet 1	|2|
+|2	|Anode e	|	|8|
+|3	|Anode c	|	|7|
+|4	|Cathode 3|	Mosfet 3|	4|
+|5	|Anode dp|	|	6|
+|6	|Cathode 4	|Mosfet 4|	5|
+|7	|Anode g|	|	|18|
+|8	|Anode d|	|	|17|
+|9	|Anode f|	|	|16|
+|10	|Cathode 2|	Mosfet 2|	3|
+|11	|Anode b|	|	15|
+|12	|Anode a|	|	14|
+|		||Switch 1|	20|
+|		||Switch 2|	19|
+
 
