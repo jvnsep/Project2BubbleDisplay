@@ -37,8 +37,7 @@ Materials:
 
 ### a. Pins Assigment
 
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
+| Display Pin No. | Function    | Mosfet | Teensy Pin No. |
+| :-------------: |:------------|:------:|:--------------:|
+| 1      | Cathode 1 | 1 |2 |
+
