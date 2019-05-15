@@ -45,9 +45,9 @@ Materials:
 |4	|Cathode 3|	Mosfet 3|	4|
 |5	|Anode dp|	|	6|
 |6	|Cathode 4	|Mosfet 4|	5|
-|7	|Anode g|	|	|18|
-|8	|Anode d|	|	|17|
-|9	|Anode f|	|	|16|
+|7	|Anode g|	|	18|
+|8	|Anode d|	|	17|
+|9	|Anode f|	|	16|
 |10	|Cathode 2|	Mosfet 2|	3|
 |11	|Anode b|	|	15|
 |12	|Anode a|	|	14|
