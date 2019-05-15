@@ -13,6 +13,9 @@ The project design an embedded system of a stop watch with accuracy count in dec
 Diagram: 
 ![alt text](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/circuit.png "Circuit Diagram")
 
+Image: 
+![alt text](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/picture.jpg "Circuit Picture")
+
 Materials:
 1. 4pcs power mosfet act as switch triggering the 4 cathodes of LED display connect to ground
 2. 8pcs. 390Ω resistors connected from μC pins to anodes,7 segments and decimal point of LED display, 
