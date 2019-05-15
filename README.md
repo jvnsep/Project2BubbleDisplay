@@ -11,10 +11,10 @@ The project design an embedded system of a stop watch with accuracy count in dec
 ## 2. Method
 
 ### a. Project Development
-Flow Chart: 
-![alt text](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/flow.png "Flow Chart")
 
-### a. Circuit Design
+      ![alt text](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/flow.png "Flow Chart")
+
+### b. Circuit Design
 Diagram: 
 ![alt text](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/circuit.png "Circuit Diagram")
 
