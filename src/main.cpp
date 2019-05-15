@@ -44,7 +44,7 @@ void countNow();                            // function to count of decisecond
 // setting sevseg object, pin modes and interrupt function
 void setup() {
   byte numDigits = 4;                       // number of digits of LED display 
-  byte digitPins[] = {1, 3, 4, 5};          // μC pins link to cathodes of LED display
+  byte digitPins[] = {2, 3, 4, 5};          // μC pins link to cathodes of LED display
   byte segmentPins[] = {14, 15, 7, 17, 8, 16, 18, 6}; // μC pins link to anodes of LED display
   byte hardwareConfig = N_TRANSISTORS;      // option of using n-type mosfet switch for anodes of LED display
   bool resistorsOnSegments = false;         // 'false' means resistors are on digit pins
@@ -129,7 +129,7 @@ void countNow(){
   static int difference = 0;                // set 0 initially time differnce after count
    difference = millis() - timer;           // calculation difference, it maybe greater than 100
     if (difference >= 100) {                // count if time decisecond 
-      timer = timer + difference;           // accumulate time with the exact difference not 100
+      timer += difference;                  // accumulate time with the exact difference not 100
       deciSeconds ++;                       // 100 milliSeconds is equal to 1 deciSecond
       if (deciSeconds == 10000) {           // Reset to 0 after counting for 1000 seconds.
         deciSeconds=0;
