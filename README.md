@@ -54,4 +54,16 @@ Materials:
 |		||Switch 1|	20|
 |		||Switch 2|	19|
 
+### b. Limiting Current Resistor
 
+1. At Anode pins of LED Display
+    Vf = 1.6 V; If = 5mA
+    Vr = 3.3 - 1.6 = 1.7 V 
+    R = 1.7 V / 0.005 A = 340 ohm
+    so: Resistor is 390 ohm
+
+2. At series to gate of Mosfet
+   limit the peak of the current burst by invisible gate-source capacitance
+   calculation not provided since it involve time constant of capacitance
+   base on web search 1Kohm the best value of resistance
+    
