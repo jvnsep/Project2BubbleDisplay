@@ -83,3 +83,5 @@ Materials:
 2. At sevseg.setBrightness
 
     set:    100      - set the brightness of LED display 1 to 100
+   
+## 4. Discussions
