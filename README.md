@@ -74,3 +74,12 @@ Materials:
    
    base on web search 1Kohm the best value of resistance
   
+### c. SevSeg Library
+
+1. At function sevseg.begin
+
+    set:    byte hardwareConfig = N_TRANSISTORS;      - option of using n-type mosfet switch for anodes of LED display
+    
+2. At sevseg.setBrightness
+
+    set:    100      - set the brightness of LED display 1 to 100
