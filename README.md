@@ -94,9 +94,12 @@ Actual Circuit:
 
 ### b. Program
 
-First include SegSev Library and intial its object show below.
+First include SegSev Library and intial its object show below. This library comprises of two files to be include in lib folder, they are SevSeg.cpp and SevSeg.h.    
+        
         #include "SevSeg.h"
-        SevSeg sevseg;         
+        
+        SevSeg sevseg;   
+
 
 
 
