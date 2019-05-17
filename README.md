@@ -94,6 +94,12 @@ Actual Circuit:
 
 ### b. Program
 
+First include SegSev Library and intial its object show below.
+        #include "SevSeg.h"
+        SevSeg sevseg;         
+
+
+
 ### c. Problem
 
 ### d. Future Improvement
