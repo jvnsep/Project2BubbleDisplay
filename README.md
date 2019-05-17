@@ -94,13 +94,13 @@ Actual Circuit:
 
 ### b. Program
 
-First, include SegSev Library and intial its object show below. This library comprises of two files to be include in lib folder, they are SevSeg.cpp and SevSeg.h.    
+First, include SegSev Library and its object show below. This library comprises of two files to be include in lib folder, they are SevSeg.cpp and SevSeg.h.    
         
         #include "SevSeg.h"
         
         SevSeg sevseg;   
 
-Second, assign pins for controller and LED display, also declare constants and variables to be use in the program.
+Assign pins for controller and LED display, also declare constants and variables to be use in the program.
 
         const uint8_t RESETPIN = 20;                // input pin for the RESET push button
         const uint8_t STARTOPPIN = 19;              // input pin for the START/STOP push button
@@ -113,6 +113,45 @@ Second, assign pins for controller and LED display, also declare constants and v
         int deciSeconds = 0;                        // variable to count in desiseconds
         int randNumber;                
 
+Initialize Sevseg object by assign pins and configure compatible to the circuit. This will setup the LED display.
+
+        byte numDigits = 4;                       // number of digits of LED display 
+        byte digitPins[] = {2, 3, 4, 5};          // μC pins link to cathodes of LED display
+        byte segmentPins[] = {14, 15, 7, 17, 8, 16, 18, 6}; // μC pins link to anodes of LED display
+        byte hardwareConfig = N_TRANSISTORS;      // option of using n-type mosfet switch for anodes of LED display
+        bool resistorsOnSegments = false;         // 'false' means resistors are on digit pins
+        bool updateWithDelays = false;            // Default 'false' is Recommended
+        bool leadingZeros = false;                // Use 'true' if you'd like to keep the leading zeros
+        bool disableDecPoint = false;             // Use 'true' if your decimal point doesn't exist or isn't connected
+
+        // intialize the setting of SevSeg object
+        sevseg.begin(hardwareConfig, numDigits, digitPins, segmentPins, resistorsOnSegments,
+        updateWithDelays, leadingZeros, disableDecPoint); // define the pins and setting
+        sevseg.setBrightness(100);                 // set the brightness of LED display 1 to 100
+        
+Also, include in the set up and initialization are the pin mode and attach interrupt of push buttons.
+
+        pinMode(RESETPIN, INPUT_PULLUP);          // declare the RESETPIN as an INPUT PULLUP
+        pinMode(STARTOPPIN, INPUT_PULLUP);        // declare the STARTOPPIN as an INPUT PULLUP
+        attachInterrupt(digitalPinToInterrupt(RESETPIN), resetISR, FALLING); // reset button external interrupts
+        attachInterrupt(digitalPinToInterrupt(STARTOPPIN), startISR, FALLING); // start stop button external interrupts
+        pinMode(LEDPIN1, OUTPUT);                 // declare the LEDPIN1 as an OUTPUT
+        pinMode(LEDPIN2, OUTPUT);                 // declare the LEDPIN2 as an OUTPUT
+        
+Counter function count in deciseconds and calculate time difference for every count. The time difference will carry over to the next count. This means that the time difference will not accumulates and increases. 
+
+        void countNow(){
+          static unsigned long timer = millis();    // set initial timer time to current time
+          static int difference = 0;                // set 0 initially time differnce after count
+           difference = millis() - timer;           // calculation difference, it maybe greater than 100
+            if (difference >= 100) {                // count if time decisecond 
+              timer += difference;                  // accumulate time with the exact difference not 100
+              deciSeconds ++;                       // 100 milliSeconds is equal to 1 deciSecond
+              if (deciSeconds == 10000) {           // Reset to 0 after counting for 1000 seconds.
+                deciSeconds=0;
+              }
+            }
+        }
 
 ### c. Problem
 
