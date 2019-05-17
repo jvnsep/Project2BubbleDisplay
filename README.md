@@ -198,6 +198,66 @@ Common debounce function can be reuse for any push button with the program. It c
           lastbuttonstate = digitalRead(pushPin);   // save the reading latest button state
         }
 
+Function for start stop push button
+
+        void stopwatch(){
+          if (stopstate == false){                  // start count
+            countNow();                             // counter function in decisecond
+          }
+          sevseg.setNumber(deciSeconds, 1);         // counter decimal
+          sevseg.refreshDisplay();                  // run refresh display repeatedly
+        }
+
+Function to know which button was pressed and hold for 2sec, START/STOP or RESET push button. This function will be improve for additional feature of the program.
+
+        void pressedbutton(){
+          static uint32_t previousTime_ms = 0;      // 0 for initial value for previousTime_ms 
+          static bool lastbuttonstate = LOW;        // low for initial value for lastbuttonstate
+
+          if (digitalRead(pushPin) != lastbuttonstate){ // if push button press
+            previousTime_ms = millis();             // reset previousTime_ms if button press
+          }
+
+          // if pressed for 2sec and identify START/STOP or RESET push button
+          if ((millis() - previousTime_ms >=2000) && (digitalRead(pushPin)==LOW)) {
+            if (pushPin == STARTOPPIN) {            // if START/Stop push button was press
+              buttonType = 1;                       // variable buttonType is 1
+            }
+            if (pushPin == RESETPIN) {              // if Reset push button was press
+              buttonType = 0;                       // variable buttonType is 1
+            }
+          }
+          lastbuttonstate = digitalRead(pushPin);   // read lastbutton state
+        }
+
+Finally, the main loop function checks option which button press and execute its function. Here in this function can futher be develop two LED not only for blinking in this case.
+
+        void loop() {
+          static uint32_t previousTime_ms = 0;      // first call 0 for initial value for previousTime_ms
+          static bool ledstate = false;             // ledstate for light on or off
+
+          pressedbutton();                          // function to know which button was pressed
+          if (buttonType == 1){                     // START/STOP push button was pressed
+            stopwatch();                            // execute stop watch function
+            previousTime_ms = millis();             // reset previousTime_ms
+            digitalWrite(LEDPIN1, false);           // led light 1 off
+            digitalWrite(LEDPIN2, false);           // led light 2 off
+          }
+          else {                                    // RESET push button was pressed
+            deciSeconds = 0;                        // display set to zero
+            sevseg.setNumber(deciSeconds, 1);       // set decimal
+            sevseg.refreshDisplay();                // repeatedly refresh display
+            if((millis() - previousTime_ms) >= 1000){ // blinking of two led every second
+              previousTime_ms = millis();           // reset previousTime_ms
+              ledstate = !ledstate;                 // alternate ledstate for blink
+            }
+            digitalWrite(LEDPIN1, ledstate);        // output to led 1
+            digitalWrite(LEDPIN2, ledstate);        // output to led 2
+          }
+        }
+
+
+
 ### c. Problem
 
 ### d. Future Improvement
