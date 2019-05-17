@@ -86,10 +86,14 @@ Materials:
 
     set:    100      - set the brightness of LED display 1 to 100
     
-### d. Timer Accuracy
+### d. Timer Accuracy Video
 
 Link: [Timer Accuracy Video](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/timer.mp4)
    
+### e. System Explaination Video
+
+Link: [Operation Video](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/OperationVideo.mp4)
+
 ## 4. Discussions
 
 ### a. Circuit
@@ -277,7 +281,7 @@ With common function for push button debounce, this may have an error response w
 
 ### d. Future Improvement
 
-
+The two LED will be incorporated in the code as an alarm by blinking before start or stop. Also, it can be program to be in the other option of the project which the reaction time.
 
 ## Appendices
 
