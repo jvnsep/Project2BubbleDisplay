@@ -57,9 +57,7 @@ Materials:
     
     Vf = 1.6 V; If = 5mA
    
-    Vr = 3.3 - 1.6 = 1.7 V 
-        
-    R = 1.7 V / 0.005 A = 340 ohm
+    Vr = 3.3 - 1.6 = 1.7 V ;  R = 1.7 V / 0.005 A = 340 ohm
     
     so: Resistor is 390 ohm
 
@@ -67,13 +65,20 @@ Materials:
    
    Vgs is positive value to turn "ON" and zero will turn "OFF"
    
-   1kohm resistor in series with gate provide limit current from capacitive discharge of mosfet gate source junction
+   A 1kohm resistor in series with gate to provide limit current from capacitive discharge of mosfet gate source junction
      
 ### c. SevSeg Library
 
 1. At function sevseg.begin
 
     set:    byte hardwareConfig = N_TRANSISTORS;      - option of using n-type mosfet switch for anodes of LED display
+    
+    from the library file, hardwareConfig have 4 option below 
+    
+        #define COMMON_CATHODE 0
+        #define COMMON_ANODE 1
+        #define N_TRANSISTORS 2
+        #define P_TRANSISTORS 3
     
 2. At sevseg.setBrightness
 
@@ -94,7 +99,7 @@ Actual Circuit:
 
 ### b. Program
 
-First, include SegSev Library and its object show below. This library comprises of two files to be include in lib folder, they are SevSeg.cpp and SevSeg.h.    
+First, include SegSev Library and its object show below. Copy SevSeg.cpp and SevSeg.h and save to lib folder.    
         
         #include "SevSeg.h"
         
