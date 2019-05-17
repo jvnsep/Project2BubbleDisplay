@@ -63,7 +63,9 @@ Materials:
 
 2. At series to gate of Mosfet
    
-   Vgs is positive value to turn "ON" and zero will turn "OFF"
+   Vgs threshold is positive value to turn "ON" and zero will turn "OFF".
+   
+   So voltage source from microcontroller must be high to turn on the mostfet.
    
    A 1kohm resistor in series with gate to provide limit current from capacitive discharge of mosfet gate source junction
      
@@ -271,9 +273,11 @@ Finally, the main loop function checks option which button press and execute its
 
 ### c. Problem
 
-With common function for push button debounce, it will create error response when both push buttons are press.
+With common function for push button debounce, this may have an error response when both push buttons are press. Another drawback of this code is that it never be exact time in its timer but it only compensate the time difference in every count so there is no accumulation of time difference. 
 
 ### d. Future Improvement
+
+
 
 ## Appendices
 
