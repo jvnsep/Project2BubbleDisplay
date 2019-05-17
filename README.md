@@ -87,7 +87,7 @@ Link: [Timer Accuracy Video](https://github.com/jvnsep/Project2BubbleDisplay/blo
 
 ### a. Circuit
 
-The circuit diagram above main component aside from teensy microcontroller, is QDSP-6064 4-Digits 7-Segments LED display. This LED display have 12 pins, for 7 segment anodes (a to g) and a decimal point anode, the other pins are for 4 digit common cathodes. Each anode are connected to 390 ohms resistors to provide limiting current. On the other hand, the common cathodes are drive by n-channel enhance mosfet switches that connect it to the ground. 
+From circuit diagram above, the main component aside from teensy microcontroller, is QDSP-6064 4-Digits 7-Segments LED display. This LED display have 12 pins, for 7 segment anodes (a to g) and a decimal point anode, the other pins are for 4 digit common cathodes. Each anode are connected to 390 ohms resistors to provide limiting current. On the other hand, the common cathodes are driven by n-channel enhance mosfet switches that will connect to ground. This complete the circuit of segment anodes and cpmmon cathodes of the LED display. To turn ON the mosfet switch, a positve voltage supply by microcontroller to gate that will control Voltage gate to source Vgs. However, a 1k ohm resistor in between gate and microcontroller output pin to function as a limiting current. So to fire the LED digit this microcontroller pin must be high or positive voltage.
 
 Actual Circuit: 
 ![alt text](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/picture.jpg "Circuit Picture")
