@@ -459,8 +459,8 @@ With common function for push button debounce, it will create error response whe
 
 ### ii. LED Display Datasheet
 
-
+![alt text](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/BubbleDisplayData.pdf "Bubble Display")
 
 ### iii. Mosfet Datasheet
 
-
+![alt text](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/MosfetData.pdf "Mosfet")
