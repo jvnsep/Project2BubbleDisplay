@@ -86,7 +86,7 @@ Materials:
     
 ### d. Timer Accuracy
 
-[I'm an inline-style link](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/timer.mp4)
+Link: [Timer Accuracy Video](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/timer.mp4)
    
 ## 4. Discussions
 
