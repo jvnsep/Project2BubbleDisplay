@@ -15,11 +15,8 @@ The project design an embedded system of a stop watch with accuracy count in dec
 ![alt text](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/flow.png "Development Flow Chart")
 
 ### b. Circuit Design
-Diagram: 
+Circuit Diagram: 
 ![alt text](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/circuit.png "Circuit Diagram")
-
-Image: 
-![alt text](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/picture.jpg "Circuit Picture")
 
 Materials:
 1. Teensy 3.2 Microcontroller
@@ -90,6 +87,10 @@ Link: [Timer Accuracy Video](https://github.com/jvnsep/Project2BubbleDisplay/blo
 
 ### a. Circuit
 
+The circuit diagram above main component aside from teensy microcontroller, is QDSP-6064 4-Digits 7-Segments LED display. This LED display have 12 pins, for 7 segment anodes (a to g) and a decimal point anode, the other pins are for 4 digit common cathodes. Each anode are connected to 390 ohms resistors to provide limiting current. On the other hand, the common cathodes are drive by n-channel enhance mosfet switches that connect it to the ground. 
+
+Actual Circuit: 
+![alt text](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/picture.jpg "Circuit Picture")
 
 ### b. Program
 
