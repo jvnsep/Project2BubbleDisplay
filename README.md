@@ -83,6 +83,10 @@ Materials:
 2. At sevseg.setBrightness
 
     set:    100      - set the brightness of LED display 1 to 100
+    
+### d. Timer Accuracy
+
+[I'm an inline-style link](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/timer.mp4)
    
 ## 4. Discussions
 
