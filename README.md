@@ -70,8 +70,8 @@ Materials:
    
    Vgs is positive value to turn "ON" and zero will turn "OFF"
    
-   IKohm resistor provide positve voltage to gate and limit current to microcontroller from mosfet
-  
+   1kohm resistor in series with gate provide limit current from capacitive discharge of mosfet gate source junction
+     
 ### c. SevSeg Library
 
 1. At function sevseg.begin
@@ -89,6 +89,7 @@ Link: [Timer Accuracy Video](https://github.com/jvnsep/Project2BubbleDisplay/blo
 ## 4. Discussions
 
 ### a. Circuit
+
 
 ### b. Program
 
