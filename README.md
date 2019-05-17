@@ -90,7 +90,7 @@ Materials:
 
 Link: [Timer Accuracy Video](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/timer.mp4)
    
-### e. System Explaination Video
+### e. System Explanation Video
 
 Link: [Operation Video](https://github.com/jvnsep/Project2BubbleDisplay/blob/master/result/OperationVideo.mp4)
 
