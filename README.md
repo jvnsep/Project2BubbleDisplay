@@ -129,7 +129,7 @@ Initialize Sevseg object by assign pins and configure compatible to the circuit.
         updateWithDelays, leadingZeros, disableDecPoint); // define the pins and setting
         sevseg.setBrightness(100);                 // set the brightness of LED display 1 to 100
         
-Also, include in the set up and initialization are the pin mode and attach interrupt of push buttons.
+Also, include in the set up and initialization the pin mode and attach interrupt of push buttons.
 
         pinMode(RESETPIN, INPUT_PULLUP);          // declare the RESETPIN as an INPUT PULLUP
         pinMode(STARTOPPIN, INPUT_PULLUP);        // declare the STARTOPPIN as an INPUT PULLUP
@@ -151,6 +151,51 @@ Counter function count in deciseconds and calculate time difference for every co
                 deciSeconds=0;
               }
             }
+        }
+
+Set up each push button its ISR. This way this interrupt function can call common push button function shown below.
+
+        // ISR function for attachinterrupt Reset push button
+        void resetISR(){
+          pushPin = RESETPIN;                       // set variable pushPin to RESETPIN constant
+          pushbutton();                             // call function for debounce and execute reset time to 0
+        }
+
+        // ISR function for attachinterrupt start/stop push button
+        void startISR(){
+          pushPin = STARTOPPIN;                     // set variable pushPin to RESETPIN constant
+          pushbutton();                             // call function for debounce and execute stop watch
+        }
+
+Common debounce function can be reuse for any push button with the program. It can identify which push button was press and switch to case on the code below.
+
+        void pushbutton(){
+          const uint32_t DEBOUNCEDELAY = 500;       // constant debouce delay of 100ms 
+          static uint32_t previousTime_ms = 0;      // first call variable 
+          static bool lastbuttonstate = LOW;        // previous state from push button
+
+          // If state is due to noise or press
+          if (digitalRead(pushPin) != lastbuttonstate){ 
+            previousTime_ms = millis();             // reset the previous time
+          }
+          // if elapse time is equal or greater than DEBOUNCEDELAY
+          if((millis() - previousTime_ms) >= DEBOUNCEDELAY){ 
+            switch (pushPin) {                      // select case by push button pin number
+              case STARTOPPIN:                      // start stop push button was pressed
+                stopstate = !stopstate;             // toggle from start to stop and vice versa
+                previousTime_ms = millis();         // reset the previous time
+                break;                              // exit case
+              case RESETPIN:                        // reset push button was pressed
+                if (stopstate == 1) {               // if counter is stop
+                  deciSeconds = 0;                  // reset counter to 0
+                  sevseg.setNumber(deciSeconds, 1); // decimal
+                  sevseg.refreshDisplay();          // run display refresh repeatedly
+                }
+                break;                              // exit case
+            }
+            previousTime_ms = millis();             // reset the previous time
+          }  
+          lastbuttonstate = digitalRead(pushPin);   // save the reading latest button state
         }
 
 ### c. Problem
