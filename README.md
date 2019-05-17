@@ -94,13 +94,24 @@ Actual Circuit:
 
 ### b. Program
 
-First include SegSev Library and intial its object show below. This library comprises of two files to be include in lib folder, they are SevSeg.cpp and SevSeg.h.    
+First, include SegSev Library and intial its object show below. This library comprises of two files to be include in lib folder, they are SevSeg.cpp and SevSeg.h.    
         
         #include "SevSeg.h"
         
         SevSeg sevseg;   
 
+Second, assign pins for controller and LED display, also declare constants and variables to be use in the program.
 
+        const uint8_t RESETPIN = 20;                // input pin for the RESET push button
+        const uint8_t STARTOPPIN = 19;              // input pin for the START/STOP push button
+        const uint8_t LEDPIN1 = 9;                  // output pin for single LED 1
+        const uint8_t LEDPIN2 = 10;                 // output pin for single LED 2
+
+        uint8_t pushPin;                            // variable identify the pin of push button that being pressed
+        bool stopstate = true;                      // variable if state for start or stop counter
+        byte buttonType = 1;                        // variable which push button was pressed, START/STOP is 1 or RESETis 0
+        int deciSeconds = 0;                        // variable to count in desiseconds
+        int randNumber;                
 
 
 ### c. Problem
