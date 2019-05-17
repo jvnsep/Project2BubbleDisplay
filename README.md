@@ -68,11 +68,9 @@ Materials:
 
 2. At series to gate of Mosfet
    
-   limit the peak of the current burst by invisible gate-source capacitance
+   Vgs is positive value to turn "ON" and zero will turn "OFF"
    
-   calculation not provided since it involve time constant of capacitance
-   
-   base on web search 1Kohm the best value of resistance
+   IKohm resistor provide positve voltage to gate and limit current to microcontroller from mosfet
   
 ### c. SevSeg Library
 
